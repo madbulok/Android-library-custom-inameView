@@ -42,6 +42,14 @@ In the code to insert an image, you must run:
 
     customViewAvatar.setImageDrawable(drawable = getDrawable(R.drawable.YOUR_DRAWABLE))
 
+Method for setting the value by which the view will be increased during animation
+
+    customViewAvatar.setValueOfIncrease(400)
+    
+Method for setting the animation speed:
+
+    customViewAvatar.setValueOfSpeedAnimation(200)
+	
 Support all standart listeners.
 
 <h1>Result</h1>
