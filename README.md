@@ -45,4 +45,4 @@ In the code to insert an image, you must run:
 Support all standart listeners.
 
 <h1>Result</h1>
-<img src="https://krotty.ru/1.gif" width="600" height="1000" />
+<img src="https://krotty.ru/1.gif" width="360" height="780" />
