@@ -45,3 +45,4 @@ In the code to insert an image, you must run:
 Support all standart listeners.
 
 <h1>Result</h1>
+![Alt Text](https://krotty.ru/1.gif)
