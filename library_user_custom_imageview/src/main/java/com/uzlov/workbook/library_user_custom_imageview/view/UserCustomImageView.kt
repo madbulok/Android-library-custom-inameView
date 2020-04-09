@@ -8,7 +8,8 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.util.Log
-import android.view.animation.LinearInterpolator
+import android.view.animation.*
+import android.view.animation.Interpolator
 import androidx.annotation.ColorInt
 import androidx.annotation.Px
 import androidx.core.animation.addListener
@@ -60,9 +61,9 @@ class UserCustomImageView @JvmOverloads constructor (context: Context,
     private val mViewRect = Rect()
     private val mBorderRect = Rect()
     private lateinit var  srcBm : Bitmap
+
+
     private var half : Int = 1
-
-
     private var size: Int = 0
     private var sizeSource: Int = 0
 
@@ -75,6 +76,9 @@ class UserCustomImageView @JvmOverloads constructor (context: Context,
 
     // change state after click
     private var isAvatarMode = true
+
+    private lateinit var mInterpolator:Interpolator
+
 
     init {
         val  mTypedArray = context.obtainStyledAttributes(attrs, R.styleable.UserCustomImageView)
@@ -92,6 +96,13 @@ class UserCustomImageView @JvmOverloads constructor (context: Context,
         mValueOfIncrease = mTypedArray.getInt(R.styleable.UserCustomImageView_piv_valueOfIncrease, 10)
         mValueOfSpeedAnimation = mTypedArray.getInt(R.styleable.UserCustomImageView_piv_valueOfSpeedAnimation, 300)
 
+        mInterpolator = when(Interpolators.values()[mTypedArray.getInt(R.styleable.UserCustomImageView_piv_animationInterpolator, 3)]){
+            Interpolators.AccelerateDecelerateInterpolator -> AccelerateDecelerateInterpolator()
+            Interpolators.AccelerateInterpolator -> AccelerateInterpolator()
+            Interpolators.DecelerateInterpolator -> DecelerateInterpolator()
+            Interpolators.LinearInterpolator -> LinearInterpolator()
+        }
+
         scaleType = ScaleType.CENTER_CROP
 
         setup()
@@ -106,7 +117,6 @@ class UserCustomImageView @JvmOverloads constructor (context: Context,
     }
 
     private fun resolveDefaultSize(spec: Int) : Int {
-        Log.e(TAG, "resolveDefaultSize")
         return when(MeasureSpec.getMode(spec)) {
             MeasureSpec.UNSPECIFIED -> context.dpTpPx(DEFAULT_SIZE).toInt()
             MeasureSpec.AT_MOST -> MeasureSpec.getSize(spec)
@@ -181,8 +191,8 @@ class UserCustomImageView @JvmOverloads constructor (context: Context,
             srcBm = drawable.toBitmap(w, h, Bitmap.Config.ARGB_8888)
             avatarPaint.shader = BitmapShader(srcBm, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
         } else {
-            buildDrawingCache()
-            avatarPaint.shader = BitmapShader(drawingCache, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            avatarPaint.shader = BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
         }
 
         mBorderRect.set(mViewRect)
@@ -261,7 +271,7 @@ class UserCustomImageView @JvmOverloads constructor (context: Context,
 
         val mValueAnimator = ValueAnimator.ofInt(width, width + mValueOfIncrease).apply {
             duration = mValueOfSpeedAnimation.toLong()
-            interpolator = LinearInterpolator()
+            interpolator = mInterpolator
             repeatMode = ValueAnimator.REVERSE
             repeatCount = 1
         }
@@ -350,5 +360,12 @@ class UserCustomImageView @JvmOverloads constructor (context: Context,
             override fun createFromParcel(source: Parcel) = SavedState(source)
             override fun newArray(size: Int): Array<SavedState?> = arrayOfNulls(size)
         }
+    }
+
+    enum class Interpolators(val value: Int) {
+        AccelerateDecelerateInterpolator(1),
+        AccelerateInterpolator(2),
+        DecelerateInterpolator(3),
+        LinearInterpolator(4)
     }
 }
