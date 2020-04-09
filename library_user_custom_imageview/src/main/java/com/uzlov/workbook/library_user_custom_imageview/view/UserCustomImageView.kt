@@ -148,7 +148,6 @@ class UserCustomImageView @JvmOverloads constructor (context: Context,
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        Log.e("123", "onSizeChanged")
         super.onSizeChanged(w, h, oldw, oldh)
         if (w == 0) {
             return
@@ -181,6 +180,9 @@ class UserCustomImageView @JvmOverloads constructor (context: Context,
         if (drawable != null) {
             srcBm = drawable.toBitmap(w, h, Bitmap.Config.ARGB_8888)
             avatarPaint.shader = BitmapShader(srcBm, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+        } else {
+            buildDrawingCache()
+            avatarPaint.shader = BitmapShader(drawingCache, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
         }
 
         mBorderRect.set(mViewRect)
