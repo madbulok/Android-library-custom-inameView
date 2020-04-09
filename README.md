@@ -41,6 +41,12 @@ Step 2. Add the dependency
 In the code to insert an image, you must run:
 
     customViewAvatar.setImageDrawable(drawable = getDrawable(R.drawable.YOUR_DRAWABLE))
+    
+If you using Picasso library:
+        
+	Picasso.get()
+            .load(R.drawable.YOUR_DRAWABLE)
+            .into(customViewAvatar)
 
 Method for setting the value by which the view will be increased during animation
 
