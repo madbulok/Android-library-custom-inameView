@@ -23,17 +23,17 @@ Step 2. Add the dependency
  
  In your layout.xml:
  
-     <com.uzlov.workbook.customview.view.UserCustomImageView
+         <com.uzlov.workbook.customview.view.UserCustomImageView
         android:id="@+id/customViewAvatar"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/tarkov"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button"
         app:piv_borderColor="@color/colorPrimaryDark"
         app:piv_borderWidth="3dp"
+        app:piv_animationInterpolator="DecelerateInterpolator"
         app:piv_initial="@string/app_name"
         app:piv_valueOfIncrease="350"
         app:piv_valueOfSpeedAnimation="100" />
