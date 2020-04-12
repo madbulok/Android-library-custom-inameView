@@ -15,7 +15,7 @@
 Step 2. Add the dependency
 
 	dependencies {
-	        implementation 'com.github.madbulok:Android-library-custom-inameView:Tag'
+	        implementation 'com.github.madbulok:Android-library-custom-inameView:$versionLibrarry'
 	}
  
  
