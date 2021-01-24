@@ -4,7 +4,10 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.CompoundButton
+import android.widget.RadioGroup
 import android.widget.SeekBar
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -39,5 +42,19 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
             customViewAvatar.setBorderColor(arrayColors.random())
         }
+
+        switch1.setOnCheckedChangeListener { buttonView, isChecked ->
+            customViewAvatar.enableAnimation(isChecked)
+            customViewAvatar.setValueOfIncrease(400)
+            customViewAvatar.setValueOfSpeedAnimation(200)
+        }
+
+        customViewAvatar.setImageDrawable(drawable = getDrawable(R.drawable.tarkov))
+
+        Picasso.get()
+            .load(R.drawable.tarkov2)
+            .into(customViewAvatar)
+
+
     }
 }
